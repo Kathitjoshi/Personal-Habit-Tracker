@@ -1,6 +1,6 @@
 """
 Personal Habit Tracker - CLI Application
-Team Members: Kathit Joshi (PES2UG23CS264), Kavyansh Jain (PES2UG23CS268)
+Team Members: Kathit Joshi 
 NOTE: This Python file has been simplified to match the reduced SQL file 
       (1 Function: GetHabitCompletionRate, 1 Procedure: MarkGoalAchieved, 
       1 Trigger: before_log_insert).
@@ -837,4 +837,5 @@ def main():
             print_success("Database connection closed.")
 
 if __name__ == "__main__":
+
     main()
