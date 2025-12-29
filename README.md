@@ -5,7 +5,7 @@ A database-driven habit tracking system built with MySQL, Python, and Tkinter th
 
 ## Overview
 
-The Personal Habit Tracker provides complete lifecycle management from user registration to performance analytics. Users can create multiple habits with customizable frequencies, set specific goals with deadlines, maintain detailed daily logs, and analyze performance through comprehensive reports.
+The Personal Habit Tracker provides complete lifecycle management from user registration to performance analytics. Users can create multiple habits with customizable frequencies, set specific goals with deadlines, maintain detailed daily logs, and analyze performance through comprehensive reports.**Note: Don't forget to change password section in code.py to your mysql server's**
 
 ## Features
 
