@@ -58,7 +58,7 @@ def get_db_connection():
             host='localhost',
             database='project',
             user='root',  
-            password='<my-password>',
+            password='your_mysql_password',
             charset='utf8mb4',
             cursorclass=pymysql.cursors.Cursor
         )
@@ -1037,3 +1037,4 @@ if __name__ == "__main__":
             else:
 
                 sys.exit(0)
+
