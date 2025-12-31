@@ -58,7 +58,7 @@ def get_db_connection():
             host='localhost',
             database='project',
             user='root',  
-            password='K@thit2011',
+            password='<my-password>',
             charset='utf8mb4',
             cursorclass=pymysql.cursors.Cursor
         )
@@ -1035,4 +1035,5 @@ if __name__ == "__main__":
             elif mode == "gui":
                 main_gui()
             else:
+
                 sys.exit(0)
