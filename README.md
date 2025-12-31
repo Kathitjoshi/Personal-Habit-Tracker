@@ -1,250 +1,288 @@
 # Personal Habit Tracker
 
-A database-driven habit tracking system built with MySQL, Python, and Tkinter that enables users to create, monitor, and analyze their daily habits through structured tracking mechanisms, goal setting, and performance analytics.
-
+A comprehensive database-driven habit tracking application built with MySQL and Python, featuring both CLI and GUI interfaces for flexible user interaction.
 
 ## Overview
 
-The Personal Habit Tracker provides complete lifecycle management from user registration to performance analytics. Users can create multiple habits with customizable frequencies, set specific goals with deadlines, maintain detailed daily logs, and analyze performance through comprehensive reports.**Note: Don't forget to change password section in code.py to your mysql server's**
+The Personal Habit Tracker is a full-featured database management system that helps users build and maintain positive habits through structured tracking, goal setting, and performance analytics. Built as a DBMS course project, it demonstrates practical implementation of advanced database concepts including normalized schema design, stored procedures, user-defined functions, triggers, and complex SQL queries.
 
-## Features
+## Team Members
+
+- **Kathit Joshi** (PES2UG23CS264)
+
+
+
+## Key Features
 
 ### User Management
 - User registration with email and phone validation
 - Profile updates for name, email, phone, and password
-- Account deletion with cascading cleanup
-- View all registered customers
+- Account deletion with automatic cascading cleanup
+- Complete customer directory viewing
 
 ### Habit Management
-- Create habits with start date and frequency (Daily/Weekly/Monthly)
-- View all habits with user information
-- Delete habits with automatic cleanup
+- Create habits with customizable frequencies (Daily/Weekly/Monthly)
+- Track habit start dates and active status
+- View all habits with associated user information
+- Delete habits with automatic cleanup of related data
 
 ### Goal Management
-- Create goals with deadlines and descriptions
-- View all goals with achievement status
-- Mark goals as achieved via stored procedure
+- Set specific goals with deadlines and descriptions
+- Track goal achievement status
+- Mark goals as achieved using stored procedures
+- Monitor progress relative to deadlines
 
-### Logging System
-- Create log entries with status (Completed/Pending/Skipped) and notes
+### Log Management
+- Daily activity logging with status tracking (Completed/Pending/Skipped)
+- Add custom notes to each log entry
 - View recent logs across all habits
-- View logs filtered by specific habit
-- Update log status
+- Filter logs by specific habit
+- Update log status to reflect progress
 
 ### Analytics and Reports
-- Calculate habit completion rates
-- Generate user performance summaries
-- Generate habit performance reports
+- Calculate habit completion rates using database functions
+- Generate user performance summaries with statistics
+- Create habit performance reports
 - Identify above-average performers
 - Display habits with associated goals
-- Identify and report overdue goals
+- Report overdue goals with days-overdue calculation
+
+### Data Integrity
+- Foreign key constraints for referential integrity
+- Check constraints for valid values
+- Trigger-based validation for log dates
+- Cascading deletes for data consistency
+- Input validation with regex patterns
+- Transaction management
 
 ## Technology Stack
 
 ### Database
-- MySQL Server 8.0
-- MySQL Workbench 8.0
+- MySQL Server 8.0 - Relational database management
+- MySQL Workbench 8.0 - Database design and administration
 
-### Programming Languages
-- SQL (queries, procedures, functions, triggers)
-- Python 3.9
+### Programming
+- Python 3.9+ - Application logic and interface
+- SQL - Queries, procedures, functions, and triggers
 
-### Python Libraries
-- mysql-connector-python 8.0.33 (database connectivity)
-- tabulate 0.9.0 (formatted table output)
-- tkinter (GUI interface)
-- re (input validation)
-- datetime (date handling)
+### Libraries
+- **PyMySQL** - Pure Python MySQL client (PyInstaller compatible)
+- **tabulate** - Formatted table output for CLI
+- **tkinter** - Built-in GUI framework
+- **re** - Input validation with regex
+- **datetime** - Date and time handling
+- **threading** - Multi-threaded GUI execution
+
+### Tools
+- Visual Studio Code - Code editor
+- Git - Version control
+- GitHub - Repository hosting
+- PyInstaller - Executable creation
 
 ## Database Schema
 
 ### Tables
 
 **Customer**
-- user_id (Primary Key)
-- email (Unique)
-- name
-- password
-- phone_no
-- created_at
+- Primary Key: user_id
+- Fields: email (unique), name, password, phone_no, created_at
+- Stores user account information
 
 **Habit**
-- habit_id (Primary Key)
-- user_id (Foreign Key)
-- name
-- start_date
-- frequency (Daily/Weekly/Monthly)
-- is_active
+- Primary Key: habit_id
+- Foreign Key: user_id references Customer
+- Fields: name, start_date, frequency, is_active
+- Tracks user habits with frequency settings
 
 **Goal**
-- goal_id (Primary Key)
-- habit_id (Foreign Key)
-- deadline
-- description
-- is_achieved
+- Primary Key: goal_id
+- Foreign Key: habit_id references Habit
+- Fields: deadline, description, is_achieved
+- Manages habit-specific goals
 
 **Logs**
-- log_id (Primary Key)
-- habit_id (Foreign Key)
-- log_date
-- notes
-- status (Completed/Pending/Skipped)
+- Primary Key: log_id
+- Foreign Key: habit_id references Habit
+- Fields: log_date, notes, status
+- Records daily habit completion
 
 ## Database Objects
 
-### Stored Procedure
-
-**MarkGoalAchieved**
-- Updates goal achievement status
-- Parameters: goal_id
-- Sets is_achieved to TRUE for specified goal
+### Stored Procedure: MarkGoalAchieved
+Updates goal achievement status and provides confirmation.
 
 ```sql
-CALL MarkGoalAchieved(301);
+CALL MarkGoalAchieved(goal_id);
 ```
 
-### Function
-
-**GetHabitCompletionRate**
-- Calculates habit completion percentage
-- Parameters: habit_id
-- Returns: DECIMAL(5,2)
-- Handles zero division cases
+### Function: GetHabitCompletionRate
+Calculates habit completion percentage with zero-division handling.
 
 ```sql
-SELECT GetHabitCompletionRate(201);
+SELECT GetHabitCompletionRate(habit_id);
 ```
 
-### Trigger
-
-**before_log_insert**
-- Validates log dates against habit start dates
-- Prevents insertion if log_date is before habit start_date
-- Ensures data integrity
+### Trigger: before_log_insert
+Validates log dates to ensure they are not before habit start dates.
 
 ## Installation
 
 ### Prerequisites
 - Python 3.9 or higher
 - MySQL Server 8.0 or higher
-- pip (Python package manager)
+- pip package manager
 
 ### Setup Steps
 
-1. Clone the repository
+1. **Clone the Repository**
 ```bash
 git clone https://github.com/Kathitjoshi/Personal-Habit-Tracker.git
 cd Personal-Habit-Tracker
 ```
 
-2. Install required Python packages
+2. **Install Python Dependencies**
 ```bash
-pip install mysql-connector-python tabulate
+pip install PyMySQL tabulate
 ```
 
-3. Set up the database
-- Open MySQL Workbench or MySQL command line
-- Run the project.sql file to create the database and tables
+3. **Set Up MySQL Database**
 ```bash
-mysql -u your_username -p < project.sql
+mysql -u root -p < project.sql
 ```
 
-4. Configure database connection
-- Open code.py
-- Update the database connection parameters:
+Or manually run the SQL file in MySQL Workbench.
+
+4. **Configure Database Connection**
+
+Edit `personal_habit_tracker_fixed.py` and update the password on line 62:
 ```python
-connection = mysql.connector.connect(
-    host='localhost',
-    user='your_username',
-    password='your_password',
-    database='project'
-)
+password='your_mysql_password'
+```
+
+5. **Run the Application**
+```bash
+python personal_habit_tracker_fixed.py
 ```
 
 ## Usage
 
-### Running the CLI Application
+### Running the Application
+
+**Interactive Mode (Default)**
 ```bash
-python code.py
+python personal_habit_tracker_fixed.py
 ```
+Choose CLI or GUI when prompted.
 
-### Running the GUI Application
+**Direct CLI Mode**
 ```bash
-python gui.py
+python personal_habit_tracker_fixed.py --cli
 ```
 
-### Main Menu Options
-
-1. Customer Management - Add, view, update, or delete customers
-2. Habit Management - Manage user habits
-3. Goal Management - Set and track goals
-4. Log Management - Record and view daily logs
-5. Reports & Analytics - View performance statistics
-6. Advanced Queries - Run complex database queries
-7. Test Function/Trigger/Procedure - Test database objects
-
-## Key Queries
-
-### Above Average Users
-Finds users with completed logs above the average:
-```sql
-SELECT c.user_id, c.name, 
-       COUNT(CASE WHEN l.status = 'Completed' THEN 1 END) AS completed_logs
-FROM Customer c
-JOIN Habit h ON c.user_id = h.user_id
-JOIN Logs l ON h.habit_id = l.habit_id
-GROUP BY c.user_id, c.name
-HAVING COUNT(CASE WHEN l.status = 'Completed' THEN 1 END) > (
-    SELECT AVG(completed_count)
-    FROM (
-        SELECT COUNT(CASE WHEN status = 'Completed' THEN 1 END) AS completed_count
-        FROM Logs GROUP BY habit_id
-    ) AS avg_table
-)
-ORDER BY completed_logs DESC;
+**Direct GUI Mode**
+```bash
+python personal_habit_tracker_fixed.py --gui
 ```
+
+### Main Features
+
+1. **Customer Management** - Add, view, update, or delete users
+2. **Habit Management** - Create and manage user habits
+3. **Goal Management** - Set and track goals with deadlines
+4. **Log Management** - Record and view daily activity logs
+5. **Reports & Analytics** - View performance statistics
+6. **Advanced Queries** - Execute complex database queries
+7. **Testing Module** - Test functions, triggers, and procedures
+
+## Building Executable
+
+### Create Standalone Application
+
+1. **Install PyInstaller**
+```bash
+pip install pyinstaller
+```
+
+2. **Build the Executable**
+```bash
+pyinstaller --onefile --console --name="PersonalHabitTracker" --hidden-import=pymysql personal_habit_tracker_fixed.py
+```
+
+3. **Locate the Executable**
+```
+dist/PersonalHabitTracker.exe
+```
+
+### For GUI-Only Version
+```bash
+pyinstaller --onefile --noconsole --name="PersonalHabitTracker_GUI" --hidden-import=pymysql personal_habit_tracker_fixed.py
+```
+
+## Advanced SQL Queries
+
+### Users Above Average Performance
+Identifies users with above-average habit completion using nested queries.
+
+### Habits with Goals
+Displays comprehensive habit information with associated goals using JOIN operations.
 
 ### Habit Performance Statistics
-```sql
-SELECT h.name AS habit_name,
-       COUNT(l.log_id) AS total_logs,
-       SUM(CASE WHEN l.status = 'Completed' THEN 1 ELSE 0 END) AS completed,
-       SUM(CASE WHEN l.status = 'Skipped' THEN 1 ELSE 0 END) AS skipped,
-       SUM(CASE WHEN l.status = 'Pending' THEN 1 ELSE 0 END) AS pending,
-       ROUND(AVG(CASE WHEN l.status = 'Completed' THEN 100 ELSE 0 END), 2) AS completion_rate
-FROM Habit h
-LEFT JOIN Logs l ON h.habit_id = l.habit_id
-GROUP BY h.habit_id, h.name
-HAVING COUNT(l.log_id) > 0
-ORDER BY completion_rate DESC;
-```
+Generates detailed metrics using aggregate functions.
 
-## Data Integrity Features
-
-- Foreign key constraints for referential integrity
-- Check constraints for valid frequency and status values
-- Trigger validation for log dates
-- Cascading deletes for maintaining consistency
-- Transaction management for data consistency
-- Input validation for all user entries
+### Overdue Goals
+Finds goals past their deadline using date-based filtering.
 
 ## Project Structure
 
 ```
 personal-habit-tracker/
-├── project.sql          # Complete database schema and queries
-├── code.py              # Python CLI application
-├── gui.py               # Tkinter GUI application
-├── README.md            # Project documentation
-└── Report.pdf           # Detailed project report
+├── personal_habit_tracker_fixed.py  # Main application file
+├── project.sql                      # Database schema and sample data
+├── README.md                        # Project documentation
+├── Report.pdf                       # Detailed project report
+├── PERSONAL_HABIT_TRACKER.pdf       # ER diagram and schema
+├── BUILD_GUIDE.md                   # Deployment instructions
+└── install_pymysql.bat              # Quick setup script
 ```
+
+## Sample Data
+
+The project includes sample data for testing:
+- 5 customer records
+- 7 habit records
+- 7 goal records
+- 16 log records
+
+## Screenshots
+
+The application features:
+- Color-coded CLI output for better readability
+- Formatted table displays using tabulate
+- Dark-themed GUI with modern styling
+- Input validation with helpful error messages
+- Confirmation dialogs for destructive operations
 
 ## Contributing
 
-This is an academic project for Database Management Systems course. For any issues or suggestions, please contact the team members.
+For issues or suggestions, please open an issue on GitHub.
 
+## License
 
+MIT License
+
+## Acknowledgments
+
+- PES University for providing the learning environment
+- Database Management Systems course instructors
+- MySQL and Python communities
+- Open-source libraries: PyMySQL, tabulate, tkinter
 
 ## Contact
 
-- Kathit Joshi - Check profile for contact
+**Repository:** [https://github.com/Kathitjoshi/Personal-Habit-Tracker](https://github.com/Kathitjoshi/Personal-Habit-Tracker)
+
+For queries or support, please contact the team members through GitHub.
+
+---
+
+**Built with Python, MySQL, and dedication to database management excellence.**
