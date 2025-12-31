@@ -161,7 +161,7 @@ password='your_mysql_password'
 
 5. **Run the Application**
 ```bash
-python personal_habit_tracker_fixed.py
+python personal_habit_tracker.py
 ```
 
 ## Usage
@@ -170,18 +170,18 @@ python personal_habit_tracker_fixed.py
 
 **Interactive Mode (Default)**
 ```bash
-python personal_habit_tracker_fixed.py
+python personal_habit_tracker.py
 ```
 Choose CLI or GUI when prompted.
 
 **Direct CLI Mode**
 ```bash
-python personal_habit_tracker_fixed.py --cli
+python personal_habit_tracker.py --cli
 ```
 
 **Direct GUI Mode**
 ```bash
-python personal_habit_tracker_fixed.py --gui
+python personal_habit_tracker.py --gui
 ```
 
 ### Main Features
@@ -205,7 +205,7 @@ pip install pyinstaller
 
 2. **Build the Executable**
 ```bash
-pyinstaller --onefile --console --name="PersonalHabitTracker" --hidden-import=pymysql personal_habit_tracker_fixed.py
+pyinstaller --onefile --console --name="PersonalHabitTracker" --hidden-import=pymysql personal_habit_tracker.py
 ```
 
 3. **Locate the Executable**
@@ -215,7 +215,7 @@ dist/PersonalHabitTracker.exe
 
 ### For GUI-Only Version
 ```bash
-pyinstaller --onefile --noconsole --name="PersonalHabitTracker_GUI" --hidden-import=pymysql personal_habit_tracker_fixed.py
+pyinstaller --onefile --noconsole --name="PersonalHabitTracker_GUI" --hidden-import=pymysql personal_habit_tracker.py
 ```
 
 ## Advanced SQL Queries
@@ -236,7 +236,7 @@ Finds goals past their deadline using date-based filtering.
 
 ```
 personal-habit-tracker/
-├── personal_habit_tracker_fixed.py  # Main application file
+├── personal_habit_tracker.py  # Main application file
 ├── project.sql                      # Database schema and sample data
 ├── README.md                        # Project documentation
 ├── Report.pdf                       # Detailed project report
